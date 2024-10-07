@@ -23,6 +23,7 @@ public class MemberRepositoryVO {
             pstmt = con.prepareStatement(sql);
             pstmt.setString(1, member.getMemberId());
             pstmt.setInt(2, member.getMoney());
+            pstmt.executeUpdate();
             return member;
         } catch (SQLException e) {
             log.error("db error", e);
