@@ -6,7 +6,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.support.TransactionTemplate;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 
 /**
@@ -43,17 +42,6 @@ public class MemberServiceV3_2 {
         memberRepository.update(fromId, fromMember.getMoney() - money);
         validation(toMember);
         memberRepository.update(toId, toMember.getMoney() + money);
-    }
-
-    private void release(Connection con) {
-        if (con != null) {
-            try {
-                con.setAutoCommit(true); // 커넥션 풀 고려해서 true로 원상복구해서 돌려줌
-                con.close();
-            } catch (Exception e) {
-                log.info("error", e); // Exception을 로그로 남길 땐 {} 안 해줘도 돼
-            }
-        }
     }
 
     private void validation(Member toMember) {
